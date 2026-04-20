@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pemerintah Clicker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:420px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:25px;
+    padding:25px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+h1{
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.score{
+    font-size:28px;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.target{
+    font-size:16px;
+    opacity:.8;
+    margin-bottom:25px;
+}
+
+button{
+    width:220px;
+    height:220px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(145deg,#22c55e,#16a34a);
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 20px rgba(0,0,0,.35);
+    transition:.15s;
+}
+
+button:active{
+    transform:scale(.95);
+}
+
+.info{
+    margin-top:20px;
+    font-size:18px;
+}
+
+.upgrade{
+    margin-top:18px;
+    width:100%;
+    height:auto;
+    padding:14px;
+    border-radius:15px;
+    font-size:18px;
+    background:linear-gradient(145deg,#3b82f6,#2563eb);
+}
+
+#win{
+    display:none;
+    margin-top:20px;
+    padding:15px;
+    background:#22c55e;
+    border-radius:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🏛 Pemerintah Clicker</h1>
+
+<div class="score" id="score">0 Click</div>
+<div class="target">Target Finish: 19.000.000 Click</div>
+
+<button onclick="klik()">PEMERINTAH</button>
+
+<div class="info">
+    Auto Click: <span id="auto">0</span>/detik
+</div>
+
+<button class="upgrade" onclick="upgrade()">
+Beli Pegawai (+1 Auto) - <span id="cost">50</span>
+</button>
+
+<div id="win">
+🎉 Kamu berhasil mencapai 19 Juta Click!
+</div>
+
+</div>
+
+<script>
+let score = 0;
+let auto = 0;
+let cost = 50;
+let target = 19000000;
+
+function format(n){
+    return n.toLocaleString("id-ID");
+}
+
+function update(){
+    document.getElementById("score").innerText = format(score) + " Click";
+    document.getElementById("auto").innerText = auto;
+    document.getElementById("cost").innerText = format(cost);
+
+    if(score >= target){
+        document.getElementById("win").style.display = "block";
+    }
+}
+
+function klik(){
+    score++;
+    update();
+}
+
+function upgrade(){
+    if(score >= cost){
+        score -= cost;
+        auto++;
+        cost = Math.floor(cost * 1.5);
+        update();
+    }
+}
+
+setInterval(()=>{
+    score += auto;
+    update();
+},1000);
+
+update();
+</script>
+
+</body>
+</html>
